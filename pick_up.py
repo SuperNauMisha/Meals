@@ -8,7 +8,6 @@ import main
 class PickUp(QMainWindow):
     def __init__(self):
         super().__init__()
-        print(1)
         uic.loadUi('pick_up.ui', self)
         self.connection = sqlite3.connect("Meals.db")
         self.cur = self.connection.cursor()
@@ -86,7 +85,9 @@ class PickUp(QMainWindow):
         print(picked_dishes)
 
     def backToMain(self):
-        main.Menu()
+        self.menu = main.Menu()
+        self.menu.show()
+        self.hide()
 
 
 if __name__ == '__main__':
@@ -94,4 +95,3 @@ if __name__ == '__main__':
     ex = PickUp()
     ex.show()
     sys.exit(app.exec_())
-
