@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QListView, QCombo
 import sqlite3
 import main
 
+
 class PickUp(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -19,7 +20,10 @@ class PickUp(QMainWindow):
             self.all_dishes.append(dish[0])
         self.ingredientsLabelList = []
         self.delIngButtonList = []
+        self.idNeedDishes = []
+        self.dishButtonList = []
         self.noGirdLoad = True
+        self.noDishGirdLoad = True
         self.ok.clicked.connect(self.appendIngredient)
         self.back.clicked.connect(self.backToMain)
         self.search.clicked.connect(self.searchDish)
@@ -80,18 +84,53 @@ class PickUp(QMainWindow):
                     there_is = False
                     break
             if there_is:
-                picked_dishes.append(self.cur.execute("""SELECT name FROM dishes
-                        WHERE id = ?""", (d_id[0],)).fetchall()[0][0])
-        print(picked_dishes)
+                picked_dishes.append(d_id[0])
+        if self.noDishGirdLoad:
+            self.dishFormLayout = QFormLayout()
+            self.dishGroupBox = QGroupBox()
+            self.dishFormLayout.setContentsMargins(10, 10, 10, 10)
+            self.dishGroupBox.setLayout(self.dishFormLayout)
+            self.disScroll.setWidget(self.dishGroupBox)
+            self.disScroll.setWidgetResizable(True)
+        self.noDishGirdLoad = False
+        for but in self.dishButtonList:
+            but.deleteLater()
+        self.dishButtonList = []
+        for d_id in picked_dishes:
+            but = QPushButton(self.cur.execute("""SELECT name FROM dishes
+                    WHERE id = ?""", (d_id,)).fetchall()[0][0])
+            but.clicked.connect(self.openDish)
+            self.idNeedDishes.append(d_id)
+            self.dishButtonList.append(but)
+            self.dishFormLayout.addRow(self.dishButtonList[-1])
+
+
+
+
+    def openDish(self):
+        print(self.idNeedDishes, [i.text() for i in self.dishButtonList])
+        dishID = self.idNeedDishes[self.dishButtonList.index(self.sender())]
+        print(dishID, "id")
+        msg = QMessageBox(self)
+        msg.setWindowTitle(self.sender().text() + ' ' + str(self.cur.execute("""SELECT mass FROM dishes
+                            WHERE id = ?""", (dishID,)).fetchall()[0][0]) + " грамм")
+        text = ''
+        for ing_id in self.cur.execute("""SELECT ingridient_id FROM conections
+                        WHERE dish_id = ?""", (dishID,)).fetchall():
+            text += self.cur.execute("""SELECT name FROM ingredients
+                        WHERE id = ?""", (ing_id[0],)).fetchall()[0][0]
+            text += " "
+            text += str(self.cur.execute("""SELECT mass FROM conections
+                        WHERE ingridient_id = ?""", (ing_id[0],)).fetchall()[0][0])
+            text += " грамм"
+            text += "\n"
+
+            print(text)
+        msg.setText(text)
+        msg.exec_()
+
 
     def backToMain(self):
         self.menu = main.Menu()
         self.menu.show()
         self.hide()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = PickUp()
-    ex.show()
-    sys.exit(app.exec_())
