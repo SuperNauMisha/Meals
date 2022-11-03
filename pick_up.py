@@ -45,12 +45,14 @@ class PickUp(QMainWindow):
                 self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
             else:
                 msg = QMessageBox(self)
+                msg.setStyleSheet("background-color: rgb(255, 201, 60);")
                 msg.setWindowTitle("Сообщение")
                 msg.setText("Этот ингридент уже есть в списке")
                 msg.exec_()
 
         else:
             msg = QMessageBox(self)
+            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
             msg.setWindowTitle("Сообщение")
             msg.setText('Этого ингридента не существует! \nВы можете добавить собственный ингридиент \nво вкладке "Создать ингридиент"')
             msg.exec_()
@@ -98,6 +100,7 @@ class PickUp(QMainWindow):
     def openDish(self):
         dishID = self.idNeedDishes[self.dishButtonList.index(self.sender())]
         msg = QMessageBox(self)
+        msg.setStyleSheet("background-color: rgb(255, 201, 60);")
         msg.setWindowTitle(self.sender().text() + ' ' + str(self.cur.execute("""SELECT mass FROM dishes
                             WHERE id = ?""", (dishID,)).fetchall()[0][0]) + " г")
         text = ''

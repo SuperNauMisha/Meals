@@ -28,12 +28,15 @@
      <rect>
       <x>60</x>
       <y>90</y>
-      <width>171</width>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
     <property name="mouseTracking">
      <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 154, 60);</string>
     </property>
     <property name="text">
      <string>Введите имеющийся ингридиент:</string>
@@ -42,7 +45,7 @@
    <widget class="QPushButton" name="ok">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>440</x>
       <y>90</y>
       <width>93</width>
       <height>31</height>
@@ -125,7 +128,7 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>260</x>
       <y>90</y>
       <width>171</width>
       <height>31</height>
@@ -155,6 +158,9 @@
     </property>
     <property name="mouseTracking">
      <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 154, 60);</string>
     </property>
     <property name="text">
      <string>Подобранные блюда:</string>
@@ -193,7 +199,7 @@
      <x>0</x>
      <y>0</y>
      <width>1175</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

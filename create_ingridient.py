@@ -62,6 +62,7 @@ class CreateIngridient(QMainWindow):
             self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
         else:
             msg = QMessageBox(self)
+            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
             msg.setWindowTitle("Сообщение")
             msg.setText("Этот ингридент уже есть в списке")
             msg.exec_()
@@ -70,6 +71,7 @@ class CreateIngridient(QMainWindow):
         index = self.delIngButtonList.index(self.sender())
         if self.id_list[index] <= 24:
             msg = QMessageBox(self)
+            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
             msg.setWindowTitle("Сообщение")
             msg.setText("Нельзя удалить встроенный ингридиент!")
             msg.exec_()

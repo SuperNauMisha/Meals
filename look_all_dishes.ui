@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateIngridient</class>
- <widget class="QMainWindow" name="CreateIngridient">
+ <class>LookAllDishes</class>
+ <widget class="QMainWindow" name="LookAllDishes">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>703</width>
-    <height>548</height>
+    <width>677</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Создать ингридиент</string>
+   <string>Смотреть все блюда</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(21, 82, 99);</string>
@@ -33,46 +33,24 @@
      <string>Назад</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
+   <widget class="QLineEdit" name="dishLine">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>90</y>
+      <x>40</x>
+      <y>110</y>
       <width>241</width>
       <height>31</height>
      </rect>
     </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 154, 60);</string>
-    </property>
-    <property name="text">
-     <string>Введиет название нового ингридиента:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>90</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 154, 60);</string>
     </property>
    </widget>
-   <widget class="QScrollArea" name="ingScroll">
+   <widget class="QScrollArea" name="dishScroll">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>130</y>
+      <x>40</x>
+      <y>160</y>
       <width>611</width>
       <height>371</height>
      </rect>
@@ -94,11 +72,11 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="ok">
+   <widget class="QPushButton" name="search">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>90</y>
+      <x>300</x>
+      <y>110</y>
       <width>93</width>
       <height>31</height>
      </rect>
@@ -113,7 +91,7 @@
      <string notr="true">background-color: rgb(255, 111, 60);</string>
     </property>
     <property name="text">
-     <string>Создать</string>
+     <string>Поиск</string>
     </property>
     <property name="checkable">
      <bool>false</bool>
@@ -125,7 +103,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>703</width>
+     <width>677</width>
      <height>26</height>
     </rect>
    </property>
