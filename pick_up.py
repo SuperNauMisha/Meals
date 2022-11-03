@@ -40,6 +40,7 @@ class PickUp(QMainWindow):
             if self.comboBox.currentText().lower() not in [i.text().lower() for i in self.ingredientsLabelList]:
                 self.ingredientsLabelList.append(QLabel(self.comboBox.currentText()))
                 but = QPushButton("Удалить")
+                but.setStyleSheet("background-color: rgb(255, 111, 60);")
                 but.clicked.connect(self.delIngredient)
                 self.delIngButtonList.append(but)
                 self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
@@ -91,6 +92,7 @@ class PickUp(QMainWindow):
         for d_id in picked_dishes:
             but = QPushButton(self.cur.execute("""SELECT name FROM dishes
                     WHERE id = ?""", (d_id,)).fetchall()[0][0])
+            but.setStyleSheet("background-color: rgb(255, 111, 60);")
             but.clicked.connect(self.openDish)
             self.idNeedDishes.append(d_id)
             self.dishButtonList.append(but)

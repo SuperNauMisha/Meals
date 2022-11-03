@@ -38,6 +38,7 @@ class CreateIngridient(QMainWindow):
             self.ingredientsLabelList.append(QLabel(self.cur.execute("""SELECT name FROM ingredients
                         WHERE id = ?""", (ing_id,)).fetchall()[0][0]))
             but = QPushButton("Удалить")
+            but.setStyleSheet("background-color: rgb(255, 111, 60);")
             but.clicked.connect(self.delIngredient)
             self.delIngButtonList.append(but)
             self.id_list.append(ing_id)
@@ -47,6 +48,7 @@ class CreateIngridient(QMainWindow):
         if self.lineEdit.text().lower() not in [i.lower() for i in self.all_ingredients]:
             self.ingredientsLabelList.append(QLabel(self.lineEdit.text()))
             but = QPushButton("Удалить")
+            but.setStyleSheet("background-color: rgb(255, 111, 60);")
             but.clicked.connect(self.delIngredient)
             self.delIngButtonList.append(but)
             self.max_id += 1

@@ -39,6 +39,7 @@ class LookAll(QMainWindow):
                         WHERE id = ?""", (dish_id,)).fetchall()[0][0]
             if self.dishLine.text().lower() in name.lower():
                 but = QPushButton(name)
+                but.setStyleSheet("background-color: rgb(255, 111, 60);")
                 self.id_list.append(dish_id)
                 but.clicked.connect(self.lookDish)
                 self.ButtonList.append(but)
