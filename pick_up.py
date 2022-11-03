@@ -37,27 +37,22 @@ class PickUp(QMainWindow):
                 self.formLayout = QFormLayout()
                 self.groupBox = QGroupBox()
                 self.formLayout.setContentsMargins(10, 10, 10, 10)
+                self.groupBox.setLayout(self.formLayout)
+                self.ingScroll.setWidget(self.groupBox)
+                self.ingScroll.setWidgetResizable(True)
+                self.noGirdLoad = False
+            if self.comboBox.currentText().lower() not in [i.text().lower() for i in self.ingredientsLabelList]:
                 self.ingredientsLabelList.append(QLabel(self.comboBox.currentText()))
                 but = QPushButton("Удалить")
                 but.clicked.connect(self.delIngredient)
                 self.delIngButtonList.append(but)
                 self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
-                self.groupBox.setLayout(self.formLayout)
-                self.ingScroll.setWidget(self.groupBox)
-                self.ingScroll.setWidgetResizable(True)
             else:
-                if self.comboBox.currentText().lower() not in [i.text().lower() for i in self.ingredientsLabelList]:
-                    self.ingredientsLabelList.append(QLabel(self.comboBox.currentText()))
-                    but = QPushButton("Удалить")
-                    but.clicked.connect(self.delIngredient)
-                    self.delIngButtonList.append(but)
-                    self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
-                else:
-                    msg = QMessageBox(self)
-                    msg.setWindowTitle("Сообщение")
-                    msg.setText("Этот ингридент уже есть в списке")
-                    msg.exec_()
-            self.noGirdLoad = False
+                msg = QMessageBox(self)
+                msg.setWindowTitle("Сообщение")
+                msg.setText("Этот ингридент уже есть в списке")
+                msg.exec_()
+
         else:
             msg = QMessageBox(self)
             msg.setWindowTitle("Сообщение")
@@ -74,7 +69,6 @@ class PickUp(QMainWindow):
     def searchDish(self):
         selected_ingredients = [i.text().lower() for i in self.ingredientsLabelList]
         picked_dishes = []
-        print(selected_ingredients)
         for d_id in self.cur.execute("""SELECT id FROM dishes""").fetchall():
             there_is = True
             for i_id in self.cur.execute("""SELECT ingridient_id FROM conections
@@ -92,7 +86,7 @@ class PickUp(QMainWindow):
             self.dishGroupBox.setLayout(self.dishFormLayout)
             self.disScroll.setWidget(self.dishGroupBox)
             self.disScroll.setWidgetResizable(True)
-        self.noDishGirdLoad = False
+            self.noDishGirdLoad = False
         for but in self.dishButtonList:
             but.deleteLater()
         self.dishButtonList = []
@@ -105,15 +99,11 @@ class PickUp(QMainWindow):
             self.dishFormLayout.addRow(self.dishButtonList[-1])
 
 
-
-
     def openDish(self):
-        print(self.idNeedDishes, [i.text() for i in self.dishButtonList])
         dishID = self.idNeedDishes[self.dishButtonList.index(self.sender())]
-        print(dishID, "id")
         msg = QMessageBox(self)
         msg.setWindowTitle(self.sender().text() + ' ' + str(self.cur.execute("""SELECT mass FROM dishes
-                            WHERE id = ?""", (dishID,)).fetchall()[0][0]) + " грамм")
+                            WHERE id = ?""", (dishID,)).fetchall()[0][0]) + " г")
         text = ''
         for ing_id in self.cur.execute("""SELECT ingridient_id FROM conections
                         WHERE dish_id = ?""", (dishID,)).fetchall():
@@ -122,13 +112,10 @@ class PickUp(QMainWindow):
             text += " "
             text += str(self.cur.execute("""SELECT mass FROM conections
                         WHERE ingridient_id = ?""", (ing_id[0],)).fetchall()[0][0])
-            text += " грамм"
+            text += " г"
             text += "\n"
-
-            print(text)
         msg.setText(text)
         msg.exec_()
-
 
     def backToMain(self):
         self.menu = main.Menu()
