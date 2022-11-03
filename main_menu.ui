@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Главное Меню</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(21, 82, 99);
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
@@ -44,6 +48,9 @@
      </property>
      <item>
       <widget class="QPushButton" name="allMeals">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 111, 60);</string>
+       </property>
        <property name="text">
         <string>Посмотерть все блюда</string>
        </property>
@@ -51,6 +58,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pickUpMeal">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 111, 60);</string>
+       </property>
        <property name="text">
         <string>Подобрать блюдо</string>
        </property>
@@ -58,6 +68,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="createIngredient">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 111, 60);</string>
+       </property>
        <property name="text">
         <string>Создать ингридиент</string>
        </property>
@@ -65,6 +78,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="createMeal">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 111, 60);</string>
+       </property>
        <property name="text">
         <string>Создать блюдо</string>
        </property>
@@ -80,6 +96,9 @@
       <width>111</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
     </property>
     <property name="text">
      <string>Выйти</string>

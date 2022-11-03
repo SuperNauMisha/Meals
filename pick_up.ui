@@ -10,11 +10,14 @@
     <x>0</x>
     <y>0</y>
     <width>1175</width>
-    <height>677</height>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Подобрать блюдо</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(21, 82, 99);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -51,6 +54,9 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
+    </property>
     <property name="text">
      <string>ОК</string>
     </property>
@@ -67,6 +73,9 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
+    </property>
     <property name="text">
      <string>Поиск</string>
     </property>
@@ -80,6 +89,9 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
+    </property>
     <property name="text">
      <string>Назад</string>
     </property>
@@ -92,6 +104,9 @@
       <width>541</width>
       <height>271</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 201, 60);</string>
     </property>
     <property name="widgetResizable">
      <bool>true</bool>
@@ -115,6 +130,9 @@
       <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 154, 60);</string>
     </property>
     <property name="editable">
      <bool>true</bool>
@@ -150,6 +168,9 @@
       <width>521</width>
       <height>271</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 201, 60);</string>
     </property>
     <property name="widgetResizable">
      <bool>true</bool>

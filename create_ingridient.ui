@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>448</height>
+    <width>703</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Создать ингридиент</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(21, 82, 99);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="back">
@@ -22,6 +25,9 @@
       <width>93</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
     </property>
     <property name="text">
      <string>Назад</string>
@@ -55,15 +61,21 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 154, 60);</string>
+    </property>
    </widget>
    <widget class="QScrollArea" name="ingScroll">
     <property name="geometry">
      <rect>
       <x>70</x>
       <y>130</y>
-      <width>471</width>
-      <height>261</height>
+      <width>611</width>
+      <height>371</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 201, 60);</string>
     </property>
     <property name="widgetResizable">
      <bool>true</bool>
@@ -73,8 +85,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>469</width>
-       <height>259</height>
+       <width>609</width>
+       <height>369</height>
       </rect>
      </property>
     </widget>
@@ -94,6 +106,9 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 111, 60);</string>
+    </property>
     <property name="text">
      <string>Создать</string>
     </property>
@@ -107,7 +122,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>563</width>
+     <width>703</width>
      <height>21</height>
     </rect>
    </property>
