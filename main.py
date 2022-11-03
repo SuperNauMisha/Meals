@@ -11,6 +11,7 @@ class Menu(QMainWindow):
         uic.loadUi('main_menu.ui', self)
         self.pickUpMeal.clicked.connect(self.pickUp)
         self.createIngredient.clicked.connect(self.createIngridient)
+        self.exitapp.clicked.connect(self.exitApp)
 
     def pickUp(self):
         self.pickup = pick_up.PickUp()
@@ -22,6 +23,8 @@ class Menu(QMainWindow):
         self.createingridient.show()
         self.hide()
 
+    def exitApp(self):
+        self.close()
 
 
 if __name__ == '__main__':

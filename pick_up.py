@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QListView, QComboBox, QPushButton, QFormLayout, QGroupBox, QMessageBox
 import sqlite3
@@ -28,8 +26,6 @@ class PickUp(QMainWindow):
         self.back.clicked.connect(self.backToMain)
         self.search.clicked.connect(self.searchDish)
         self.comboBox.addItems(self.all_ingredients)
-        print(self.all_ingredients)
-        print(self.all_dishes)
 
     def appendIngredient(self):
         if self.comboBox.currentText().lower() in [i.lower() for i in self.all_ingredients]:

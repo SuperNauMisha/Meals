@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QListView, QComboBox, QPushButton, QFormLayout, QGroupBox, QMessageBox
 import sqlite3
@@ -25,7 +23,6 @@ class CreateIngridient(QMainWindow):
         for ingr in self.cur.execute("""SELECT name FROM ingredients""").fetchall():
             self.all_ingredients.append(ingr[0])
         self.max_id = max(self.all_ingredients_id)
-        print(self.max_id)
         self.loadIngridients()
 
     def loadIngridients(self):
@@ -47,11 +44,8 @@ class CreateIngridient(QMainWindow):
             self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
 
     def appendIngredient(self):
-        print(1)
         if self.lineEdit.text().lower() not in [i.lower() for i in self.all_ingredients]:
-            print(2)
             self.ingredientsLabelList.append(QLabel(self.lineEdit.text()))
-            print(3)
             but = QPushButton("Удалить")
             but.clicked.connect(self.delIngredient)
             self.delIngButtonList.append(but)
@@ -59,16 +53,12 @@ class CreateIngridient(QMainWindow):
             self.id_list.append(self.max_id)
             self.all_ingredients_id.append(self.max_id)
             self.all_ingredients.append(self.lineEdit.text())
-            print(self.max_id, self.lineEdit.text())
             sqlite_insert_with_param = """INSERT INTO ingredients
                               (id,name)
                               VALUES (?, ?);"""
             data_tuple = (self.max_id, self.lineEdit.text())
             self.cur.execute(sqlite_insert_with_param, data_tuple)
             self.connection.commit()
-            print(self.cur.execute("""SELECT name FROM ingredients
-                        WHERE id = ?""", (self.max_id,)).fetchall())
-            print(self.cur.execute("""SELECT name FROM ingredients""").fetchall())
             self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
         else:
             msg = QMessageBox(self)
@@ -90,11 +80,8 @@ class CreateIngridient(QMainWindow):
             del self.delIngButtonList[index]
             self.ingredientsLabelList[index].deleteLater()
             del self.ingredientsLabelList[index]
-            try:
-                self.all_ingredients.remove(name)
-                self.all_ingredients_id.remove(id)
-            except:
-                print("err del ")
+            self.all_ingredients.remove(name)
+            self.all_ingredients_id.remove(id)
             del self.id_list[index]
             sqlite_param = """DELETE from ingredients
                             where id = ?;"""
