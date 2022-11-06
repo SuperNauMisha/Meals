@@ -89,6 +89,7 @@ class PickUp(QMainWindow):
         for but in self.dishButtonList:
             but.deleteLater()
         self.dishButtonList = []
+        self.idNeedDishes = []
         for d_id in picked_dishes:
             but = QPushButton(self.cur.execute("""SELECT name FROM dishes
                     WHERE id = ?""", (d_id,)).fetchall()[0][0])
