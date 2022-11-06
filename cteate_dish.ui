@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1170</width>
-    <height>600</height>
+    <width>1252</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Создать блюдо</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(21, 82, 99);</string>
@@ -38,7 +38,7 @@
      <rect>
       <x>70</x>
       <y>130</y>
-      <width>641</width>
+      <width>571</width>
       <height>271</height>
      </rect>
     </property>
@@ -53,7 +53,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>639</width>
+       <width>569</width>
        <height>269</height>
       </rect>
      </property>
@@ -84,7 +84,7 @@
    <widget class="QPushButton" name="ok">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>550</x>
       <y>90</y>
       <width>93</width>
       <height>31</height>
@@ -111,7 +111,7 @@
      <rect>
       <x>440</x>
       <y>90</y>
-      <width>151</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -190,7 +190,7 @@
      <rect>
       <x>440</x>
       <y>410</y>
-      <width>151</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -214,7 +214,7 @@
    <widget class="QPushButton" name="create">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>550</x>
       <y>410</y>
       <width>93</width>
       <height>31</height>
@@ -249,13 +249,61 @@
      <string notr="true">background-color: rgb(255, 154, 60);</string>
     </property>
    </widget>
+   <widget class="QScrollArea" name="dishScroll">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>130</y>
+      <width>571</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 201, 60);</string>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>569</width>
+       <height>269</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>90</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 154, 60);</string>
+    </property>
+    <property name="text">
+     <string> Удаление блюд:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1170</width>
+     <width>1252</width>
      <height>21</height>
     </rect>
    </property>

@@ -13,15 +13,14 @@ class LookAll(QMainWindow):
         self.all_dishes_id = []
         for dish_id in self.cur.execute("""SELECT id FROM dishes""").fetchall():
             self.all_dishes_id.append(dish_id[0])
-
         self.ButtonList = []
         self.id_list = []
         self.noGirdLoad = True
         self.back.clicked.connect(self.backToMain)
-        self.search.clicked.connect(self.loadIngridients)
-        self.loadIngridients()
+        self.search.clicked.connect(self.loadDishes)
+        self.loadDishes()
 
-    def loadIngridients(self):
+    def loadDishes(self):
         if self.noGirdLoad:
             self.formLayout = QFormLayout()
             self.groupBox = QGroupBox()
@@ -30,10 +29,12 @@ class LookAll(QMainWindow):
             self.dishScroll.setWidget(self.groupBox)
             self.dishScroll.setWidgetResizable(True)
             self.noGirdLoad = False
+
         for but in self.ButtonList:
             but.deleteLater()
         self.ButtonList = []
         self.id_list = []
+
         for dish_id in self.all_dishes_id:
             name = self.cur.execute("""SELECT name FROM dishes
                         WHERE id = ?""", (dish_id,)).fetchall()[0][0]
