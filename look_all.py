@@ -59,7 +59,7 @@ class LookAll(QMainWindow):
                                 WHERE id = ?""", (ing_id[0],)).fetchall()[0][0]
             text += " "
             text += str(self.cur.execute("""SELECT mass FROM conections
-                                WHERE ingridient_id = ?""", (ing_id[0],)).fetchall()[0][0])
+                                WHERE ingridient_id = ? AND dish_id = ?""", (ing_id[0], id)).fetchall()[0][0])
             text += " г"
             text += "\n"
         msg.setText(text)

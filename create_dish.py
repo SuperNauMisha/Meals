@@ -12,15 +12,19 @@ class CreateDish(QMainWindow):
         self.cur = self.connection.cursor()
         self.all_ingredients = []
         self.all_dishes_id = []
+        self.all_con_id = []
         for ingr in self.cur.execute("""SELECT name FROM ingredients""").fetchall():
             self.all_ingredients.append(ingr[0])
         for dish_i in self.cur.execute("""SELECT id FROM dishes""").fetchall():
             self.all_dishes_id.append(dish_i[0])
+        for con_i in self.cur.execute("""SELECT id FROM conections""").fetchall():
+            self.all_con_id.append(con_i[0])
         self.ingredientsLabelList = []
         self.delIngButtonList = []
         self.massIngList = []
         self.idIngList = []
         self.maxId = max(self.all_dishes_id)
+        self.maxConId = max(self.all_con_id)
         self.noGirdLoad = True
         self.ok.clicked.connect(self.appendIngredient)
         self.back.clicked.connect(self.backToMain)
@@ -91,7 +95,17 @@ class CreateDish(QMainWindow):
             data = (self.maxId, self.nameDish.text(), int(self.massDish.text()))
             self.cur.execute(param, data)
             self.connection.commit()
+            for ing_id in self.idIngList:
+                self.maxConId = max(self.all_con_id) + 1
+                self.all_con_id.append(self.maxConId)
+                index = self.idIngList.index(ing_id)
 
+                param = """INSERT INTO conections
+                                  (id, ingridient_id, dish_id, mass)
+                                  VALUES (?, ?, ?, ?);"""
+                data = (self.maxConId, ing_id, self.maxId, self.massIngList[index])
+                self.cur.execute(param, data)
+            self.connection.commit()
 
         else:
             msg = QMessageBox(self)
