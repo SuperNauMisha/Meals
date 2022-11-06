@@ -55,11 +55,11 @@ class CreateIngridient(QMainWindow):
             self.id_list.append(self.max_id)
             self.all_ingredients_id.append(self.max_id)
             self.all_ingredients.append(self.lineEdit.text())
-            sqlite_insert_with_param = """INSERT INTO ingredients
+            param = """INSERT INTO ingredients
                               (id,name)
                               VALUES (?, ?);"""
-            data_tuple = (self.max_id, self.lineEdit.text())
-            self.cur.execute(sqlite_insert_with_param, data_tuple)
+            data = (self.max_id, self.lineEdit.text())
+            self.cur.execute(param, data)
             self.connection.commit()
             self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
         else:
