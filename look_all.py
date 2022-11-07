@@ -38,7 +38,7 @@ class LookAll(QMainWindow):
         for dish_id in self.all_dishes_id:
             name = self.cur.execute("""SELECT name FROM dishes
                         WHERE id = ?""", (dish_id,)).fetchall()[0][0]
-            if self.dishLine.text().lower() in name.lower():
+            if self.dishLine.text().lower().strip() in name.lower():
                 but = QPushButton(name)
                 but.setStyleSheet("background-color: rgb(255, 111, 60);")
                 self.id_list.append(dish_id)

@@ -1,5 +1,6 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QListView, QComboBox, QPushButton, QFormLayout, QGroupBox, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QListView, QComboBox, QPushButton,\
+    QFormLayout, QGroupBox, QMessageBox
 import sqlite3
 import main
 
@@ -34,7 +35,6 @@ class CreateDish(QMainWindow):
         self.ingName.addItems(self.all_ingredients)
         self.loadDishes()
 
-
     def appendIngredient(self):
         if self.ingName.currentText().lower() in [i.lower() for i in self.all_ingredients]:
             if self.ingMass.text().isdigit() and not self.ingMass.text() == "":
@@ -48,7 +48,8 @@ class CreateDish(QMainWindow):
                     self.noGirdLoad = False
                 if self.ingName.currentText().lower() not in [self.cur.execute("""SELECT name FROM ingredients
                             WHERE id = ?""", (i,)).fetchall()[0][0].lower() for i in self.idIngList]:
-                    self.ingredientsLabelList.append(QLabel(self.ingName.currentText() + " " + self.ingMass.text() + "г"))
+                    self.ingredientsLabelList.append(QLabel(self.ingName.currentText()
+                                                            + ' ' + self.ingMass.text() + "г"))
                     self.idIngList.append(self.cur.execute("""SELECT id FROM ingredients
                             WHERE name = ?""", (self.ingName.currentText().lower().capitalize(),)).fetchall()[0][0])
                     print(self.idIngList)
@@ -65,18 +66,10 @@ class CreateDish(QMainWindow):
                     msg.setText("Этот ингридент уже есть в списке")
                     msg.exec_()
             else:
-                msg = QMessageBox(self)
-                msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-                msg.setWindowTitle("Сообщение")
-                msg.setText('Масса должна быть числом!')
-                msg.exec_()
-
+                self.message('Масса должна быть числом!')
         else:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText('Этого ингридента не существует! \nВы можете добавить собственный ингридиент \nво вкладке "Создать ингридиент"')
-            msg.exec_()
+            self.message('Этого ингридента не существует! \nВы можете добавить собственный ингридиент'
+                        ' \nво вкладке "Создать ингридиент"')
 
     def delIngredient(self):
         index = self.delIngButtonList.index(self.sender())
@@ -88,45 +81,37 @@ class CreateDish(QMainWindow):
         del self.massIngList[index]
 
     def createNewDish(self):
-        if self.nameDish.text().lower() not in [i[0].lower() for i in self.cur.execute("""SELECT name FROM dishes""").fetchall()]:
-            if self.massDish.text().isdigit() and not self.massDish.text() == "":
-                self.maxId = max(self.all_dishes_id) + 1
-                self.all_dishes_id.append(self.maxId)
-                print(self.maxId, "maxId")
-                param = """INSERT INTO dishes
-                                      (id, name, mass)
-                                      VALUES (?, ?, ?);"""
-                data = (self.maxId, self.nameDish.text(), int(self.massDish.text()))
-                self.cur.execute(param, data)
-                self.connection.commit()
-                for ing_id in self.idIngList:
-                    self.maxConId = max(self.all_con_id) + 1
-                    self.all_con_id.append(self.maxConId)
-                    index = self.idIngList.index(ing_id)
-
-                    param = """INSERT INTO conections
-                                      (id, ingridient_id, dish_id, mass)
-                                      VALUES (?, ?, ?, ?);"""
-                    data = (self.maxConId, ing_id, self.maxId, self.massIngList[index])
+        if not self.nameDish.text().lower().strip() == "":
+            if self.nameDish.text().lower().strip() not in [i[0].lower() for i in
+                                                            self.cur.execute("""SELECT name FROM dishes""").fetchall()]:
+                if self.massDish.text().strip().isdigit() and not self.massDish.text() == "":
+                    self.maxId = max(self.all_dishes_id) + 1
+                    self.all_dishes_id.append(self.maxId)
+                    print(self.maxId, "maxId")
+                    param = """INSERT INTO dishes
+                                          (id, name, mass)
+                                          VALUES (?, ?, ?);"""
+                    data = (self.maxId, self.nameDish.text().strip(), int(self.massDish.text().strip()))
                     self.cur.execute(param, data)
-                self.connection.commit()
-                self.loadDishes()
+                    self.connection.commit()
+                    for ing_id in self.idIngList:
+                        self.maxConId = max(self.all_con_id) + 1
+                        self.all_con_id.append(self.maxConId)
+                        index = self.idIngList.index(ing_id)
+
+                        param = """INSERT INTO conections
+                                          (id, ingridient_id, dish_id, mass)
+                                          VALUES (?, ?, ?, ?);"""
+                        data = (self.maxConId, ing_id, self.maxId, self.massIngList[index])
+                        self.cur.execute(param, data)
+                    self.connection.commit()
+                    self.loadDishes()
+                else:
+                    self.message('Масса должна быть числом!')
             else:
-                msg = QMessageBox(self)
-                msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-                msg.setWindowTitle("Сообщение")
-                msg.setText('Масса должна быть числом!')
-                msg.exec_()
+                self.message('Такое блюдо уже есть!')
         else:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText('Такое блюдо уже есть!')
-            msg.exec_()
-
-
-
-
+            self.message('Нельзя создать блюдо без названия!')
 
     def loadDishes(self):
         if self.noDishGirdLoad:
@@ -152,15 +137,10 @@ class CreateDish(QMainWindow):
             self.allDishBut.append(but)
             self.formLayout2.addRow(self.allDishBut[-1])
 
-
     def delDish(self):
         index = self.allDishBut.index(self.sender())
         if self.dishes_id_in_rows[index] <= 10:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText("Нельзя удалить встроенное блюдо!")
-            msg.exec_()
+            self.message("Нельзя удалить встроенное блюдо!")
         else:
             id = self.dishes_id_in_rows[index]
             self.allDishBut[index].deleteLater()
@@ -181,7 +161,12 @@ class CreateDish(QMainWindow):
             self.cur.execute(sqlite_param, data_tuple)
             self.connection.commit()
             self.loadDishes()
-
+    def message(self, stroka):
+        msg = QMessageBox(self)
+        msg.setStyleSheet("background-color: rgb(255, 201, 60);")
+        msg.setWindowTitle("Сообщение")
+        msg.setText(stroka)
+        msg.exec_()
 
     def backToMain(self):
         self.menu = main.Menu()

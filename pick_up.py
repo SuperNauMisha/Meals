@@ -28,7 +28,7 @@ class PickUp(QMainWindow):
         self.comboBox.addItems(self.all_ingredients)
 
     def appendIngredient(self):
-        if self.comboBox.currentText().lower() in [i.lower() for i in self.all_ingredients]:
+        if self.comboBox.currentText().lower().strip() in [i.lower() for i in self.all_ingredients]:
             if self.noGirdLoad:
                 self.formLayout = QFormLayout()
                 self.groupBox = QGroupBox()
@@ -37,7 +37,7 @@ class PickUp(QMainWindow):
                 self.ingScroll.setWidget(self.groupBox)
                 self.ingScroll.setWidgetResizable(True)
                 self.noGirdLoad = False
-            if self.comboBox.currentText().lower() not in [i.text().lower() for i in self.ingredientsLabelList]:
+            if self.comboBox.currentText().lower().strip() not in [i.text().lower() for i in self.ingredientsLabelList]:
                 self.ingredientsLabelList.append(QLabel(self.comboBox.currentText()))
                 but = QPushButton("Удалить")
                 but.setStyleSheet("background-color: rgb(255, 111, 60);")
@@ -45,18 +45,10 @@ class PickUp(QMainWindow):
                 self.delIngButtonList.append(but)
                 self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
             else:
-                msg = QMessageBox(self)
-                msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-                msg.setWindowTitle("Сообщение")
-                msg.setText("Этот ингридент уже есть в списке")
-                msg.exec_()
-
+                self.message("Этот ингридент уже есть в списке")
         else:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText('Этого ингридента не существует! \nВы можете добавить собственный ингридиент \nво вкладке "Создать ингридиент"')
-            msg.exec_()
+            self.message('Этого ингридента не существует! \nВы можете добавить собственный ингридиент'
+                         ' \nво вкладке "Создать ингридиент"')
 
     def delIngredient(self):
         index = self.delIngButtonList.index(self.sender())
@@ -117,6 +109,13 @@ class PickUp(QMainWindow):
             text += " г"
             text += "\n"
         msg.setText(text)
+        msg.exec_()
+
+    def message(self, stroka):
+        msg = QMessageBox(self)
+        msg.setStyleSheet("background-color: rgb(255, 201, 60);")
+        msg.setWindowTitle("Сообщение")
+        msg.setText(stroka)
         msg.exec_()
 
     def backToMain(self):

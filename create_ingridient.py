@@ -45,55 +45,61 @@ class CreateIngridient(QMainWindow):
             self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
 
     def appendIngredient(self):
-        if self.lineEdit.text().lower() not in [i.lower() for i in self.all_ingredients]:
-            self.ingredientsLabelList.append(QLabel(self.lineEdit.text()))
-            but = QPushButton("Удалить")
-            but.setStyleSheet("background-color: rgb(255, 111, 60);")
-            but.clicked.connect(self.delIngredient)
-            self.delIngButtonList.append(but)
-            self.max_id += 1
-            self.id_list.append(self.max_id)
-            self.all_ingredients_id.append(self.max_id)
-            self.all_ingredients.append(self.lineEdit.text())
-            param = """INSERT INTO ingredients
-                              (id,name)
-                              VALUES (?, ?);"""
-            data = (self.max_id, self.lineEdit.text())
-            self.cur.execute(param, data)
-            self.connection.commit()
-            self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
+        if not self.lineEdit.text().lower().strip() == "":
+            if self.lineEdit.text().lower().strip() not in [i.lower().strip() for i in self.all_ingredients]:
+                self.ingredientsLabelList.append(QLabel(self.lineEdit.text().strip()))
+                but = QPushButton("Удалить")
+                but.setStyleSheet("background-color: rgb(255, 111, 60);")
+                but.clicked.connect(self.delIngredient)
+                self.delIngButtonList.append(but)
+                self.max_id += 1
+                self.id_list.append(self.max_id)
+                self.all_ingredients_id.append(self.max_id)
+                self.all_ingredients.append(self.lineEdit.text().strip())
+                param = """INSERT INTO ingredients
+                                  (id,name)
+                                  VALUES (?, ?);"""
+                data = (self.max_id, self.lineEdit.text())
+                self.cur.execute(param, data)
+                self.connection.commit()
+                self.formLayout.addRow(self.ingredientsLabelList[-1], self.delIngButtonList[-1])
+            else:
+                self.message("Этот ингридент уже есть в списке")
         else:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText("Этот ингридент уже есть в списке")
-            msg.exec_()
+            self.message("Нельзя создать ингридиент без имени!")
 
     def delIngredient(self):
         index = self.delIngButtonList.index(self.sender())
         if self.id_list[index] <= 24:
-            msg = QMessageBox(self)
-            msg.setStyleSheet("background-color: rgb(255, 201, 60);")
-            msg.setWindowTitle("Сообщение")
-            msg.setText("Нельзя удалить встроенный ингридиент!")
-            msg.exec_()
+            self.message("Нельзя удалить встроенный ингридиент!")
         else:
             name = self.ingredientsLabelList[index].text()
             id = self.id_list[index]
-            self.delIngButtonList[index].deleteLater()
-            del self.delIngButtonList[index]
-            self.ingredientsLabelList[index].deleteLater()
-            del self.ingredientsLabelList[index]
-            self.all_ingredients.remove(name)
-            self.all_ingredients_id.remove(id)
-            del self.id_list[index]
-            sqlite_param = """DELETE from ingredients
-                            where id = ?;"""
-            data_tuple = (id,)
-            self.cur.execute(sqlite_param, data_tuple)
-            self.connection.commit()
-            self.max_id = max(self.all_ingredients_id)
+            if id not in [i[0] for i in self.cur.execute("""SELECT ingridient_id FROM conections""").fetchall()]:
+                self.delIngButtonList[index].deleteLater()
+                del self.delIngButtonList[index]
+                self.ingredientsLabelList[index].deleteLater()
+                del self.ingredientsLabelList[index]
+                print(322)
+                self.all_ingredients.remove(name)
+                self.all_ingredients_id.remove(id)
+                print(323)
+                del self.id_list[index]
+                sqlite_param = """DELETE from ingredients
+                                where id = ?;"""
+                data_tuple = (id,)
+                self.cur.execute(sqlite_param, data_tuple)
+                self.connection.commit()
+                self.max_id = max(self.all_ingredients_id)
+            else:
+                self.message("Нельзя удалить ингридиент,\nкоторый используется в каком-то рецепте!")
 
+    def message(self, stroka):
+        msg = QMessageBox(self)
+        msg.setStyleSheet("background-color: rgb(255, 201, 60);")
+        msg.setWindowTitle("Сообщение")
+        msg.setText(stroka)
+        msg.exec_()
 
     def backToMain(self):
         self.cur.close()
