@@ -80,10 +80,8 @@ class CreateIngridient(QMainWindow):
                 del self.delIngButtonList[index]
                 self.ingredientsLabelList[index].deleteLater()
                 del self.ingredientsLabelList[index]
-                print(322)
                 self.all_ingredients.remove(name)
                 self.all_ingredients_id.remove(id)
-                print(323)
                 del self.id_list[index]
                 sqlite_param = """DELETE from ingredients
                                 where id = ?;"""

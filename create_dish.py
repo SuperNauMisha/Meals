@@ -52,7 +52,6 @@ class CreateDish(QMainWindow):
                                                             + ' ' + self.ingMass.text() + "г"))
                     self.idIngList.append(self.cur.execute("""SELECT id FROM ingredients
                             WHERE name = ?""", (self.ingName.currentText().lower().capitalize(),)).fetchall()[0][0])
-                    print(self.idIngList)
                     self.massIngList.append(self.ingMass.text())
                     but = QPushButton("Удалить")
                     but.setStyleSheet("background-color: rgb(255, 111, 60);")
@@ -87,7 +86,6 @@ class CreateDish(QMainWindow):
                 if self.massDish.text().strip().isdigit() and not self.massDish.text() == "":
                     self.maxId = max(self.all_dishes_id) + 1
                     self.all_dishes_id.append(self.maxId)
-                    print(self.maxId, "maxId")
                     param = """INSERT INTO dishes
                                           (id, name, mass)
                                           VALUES (?, ?, ?);"""
